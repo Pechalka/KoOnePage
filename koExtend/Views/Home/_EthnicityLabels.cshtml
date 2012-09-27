@@ -1,0 +1,16 @@
+﻿<table>
+    <thead>
+        <tr>
+            <th>Ethnicity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach : ethnicities">
+        <tr>
+            <td data-bind="text : $data"></td>
+            <td><a href="#" data-bind="click : $parent.deltet">delete</a></td>
+        </tr>
+    </tbody>
+</table>
+<input type="text" data-bind="value : nameToAdd"/>
+<a href="#" data-bind="click: add">Add</a>

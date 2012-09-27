@@ -1,0 +1,21 @@
+﻿
+<table>
+    <thead>
+      <tr><th>Name</th> 
+        <th>Updated date</th>         
+        <th>Updated by</th>
+      </tr>   
+    </thead>
+    <tbody data-bind="foreach : templates">
+        <tr>
+            <td>
+                <a href="#" data-bind="text : Name, click : $parent.goToEdit"></a>
+            </td>
+            <td data-bind="text : UpdatedDate"></td>
+            <td data-bind="text : UpdatedBy"></td>
+        </tr>
+    </tbody>
+</table>
+<label><input type="checkbox" data-bind="checked : WhenCreated"/>sent when created</label>
+<label><input type="checkbox" data-bind="checked : WhenComplited"/>sent when complited</label>
+<a href="#" data-bind="click : updateSchooloptions">Update</a>
