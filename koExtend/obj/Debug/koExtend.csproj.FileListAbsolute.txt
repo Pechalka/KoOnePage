@@ -5,3 +5,10 @@ D:\Work\js\koExtend\koExtend\koExtend\bin\EntityFramework.xml
 D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\ResolveAssemblyReference.cache
 D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\koExtend.dll
 D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\koExtend.pdb
+c:\Work\KoOnePage\koExtend\bin\koExtend.dll
+c:\Work\KoOnePage\koExtend\bin\koExtend.pdb
+c:\Work\KoOnePage\koExtend\bin\EntityFramework.dll
+c:\Work\KoOnePage\koExtend\bin\EntityFramework.xml
+c:\Work\KoOnePage\koExtend\obj\Debug\ResolveAssemblyReference.cache
+c:\Work\KoOnePage\koExtend\obj\Debug\koExtend.dll
+c:\Work\KoOnePage\koExtend\obj\Debug\koExtend.pdb

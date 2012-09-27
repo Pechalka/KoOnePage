@@ -10,6 +10,6 @@
             whenCreated: page.WhenCreated,
             whenComplited: page.WhenComplited
         };
-        $.post(app.updateShcoolOptions, $.param(data, true), null);
+        $.post(app.updateShcoolOptions, data, null);
     };
 }

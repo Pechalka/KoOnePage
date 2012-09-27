@@ -5,7 +5,8 @@
         },
         write: function (newValue) {
             if (newValue) {
-                target($.extend(newValue, new options.viewModel(newValue, options.context)));
+                var page = new options.viewModel(newValue, options.context);
+                target($.extend(newValue, page));
             } else
                 target(null);
         }

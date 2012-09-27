@@ -8,7 +8,7 @@
 <html>
     <head>
         <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/knockout-2.1.0.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/knockout-2.1.0.debug.js")" type="text/javascript"></script>
 
         <script src="@Url.Content("~/Scripts/App/ko.Pages.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/App/App.js")" type="text/javascript"></script>
@@ -31,7 +31,8 @@
                     updateTemplateLink: '@Url.Action("UpdateTemplate", "LetterTemplate")',
                     updateShcoolOptions: '@Url.Action("UpdateSchoolOptions", "LetterTemplate")',
                     
-                    ethnicityLink : '@Url.Action("Getethnicities", "Ethnicity")'
+                    ethnicityLink : '@Url.Action("Getethnicities", "Ethnicity")',
+                    ethnicityUpdateLink : '@Url.Action("UpdateEthnicitys", "Ethnicity")'
                 }));
             });
         </script>

@@ -27,7 +27,7 @@ namespace koExtend.Controllers
         
         public ActionResult UpdateSchoolOptions(bool whenCreated, bool whenComplited)
         {
-            SchoolSerivce.WhenComplited = whenComplited;
+            SchoolSerivce.WhenCreated = whenCreated;
             SchoolSerivce.WhenComplited = whenComplited;
 
             return new EmptyResult();
