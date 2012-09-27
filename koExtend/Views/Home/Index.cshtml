@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/knockout-2.1.0.js")" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+
+            ko.extenders.page = function (target, options) {
+                var result = ko.computed({
+                    read: function () {
+                        return target();
+                    },
+                    write: function (newValue) {
+                        if (newValue) {
+                            target($.extend(newValue, new options.viewModel(newValue, options.context)));
+                        } else
+                            target(null);
+                    }
+                });
+                return result;
+            };
+
+
+            function ListViewModel(data, app) {
+                var self = this;
+                self.goToEdit = function (item) {
+                    app.goToEdit(item.Id);
+                };
+                
+            }
+
+            function EditViewModel(data, app) {
+                var self = this;
+                debugger;
+                self.cansel = function() {
+                    app.goToList();
+                };
+
+                self.save = function (page) {
+                    debugger;
+                    $.post(app.updatePeaple, { name: page.Name, id: page.Id },
+                        function () {
+                            app.goToList();
+                        });
+                };
+            }
+
+            function App(options) {
+                var app = this;
+                $.extend(app, options);
+                
+                app.listPage = ko.observable().extend({ page: { viewModel: ListViewModel, context : app } });
+                app.editPage = ko.observable().extend({ page: { viewModel: EditViewModel, context: app} });
+
+
+                app.goToList = function () {
+                    $.get(options.listLink, app.listPage);
+                    
+                    app.editPage(null);
+                };
+
+
+                app.goToEdit = function (id) {
+                    $.get(options.editLink, { id: id }, app.editPage);
+                    app.listPage(null);
+                };
+
+                app.goToList();
+            }
+            
+
+
+
+            $(function () {
+                ko.applyBindings(new App({
+                    listLink : '@Url.Action("GetList")',
+                    updatePeaple : '@Url.Action("Update")',
+                    editLink : '@Url.Action("GetPeaple")'
+                }));
+            });
+        </script>
+        <title>Index</title>
+    </head>
+    <body>
+        <div data-bind="with : listPage">
+            <table>
+                <thead>
+                    <tr><th>Name</th></tr>                    
+                </thead>
+                <tbody data-bind="foreach : peoples">
+                    <tr>
+                        <td>
+                            <a href="#" data-bind="text : Name, click : $parent.goToEdit"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-bind="with : editPage">
+            <input type="text" data-bind="value : Name"/>
+            <a href="#" data-bind="click : cansel">Cansel</a>
+            <a href="#" data-bind="click : save">Save</a>
+        </div>
+    </body>
+</html>

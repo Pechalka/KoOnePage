@@ -1,0 +1,7 @@
+D:\Work\js\koExtend\koExtend\koExtend\bin\koExtend.dll
+D:\Work\js\koExtend\koExtend\koExtend\bin\koExtend.pdb
+D:\Work\js\koExtend\koExtend\koExtend\bin\EntityFramework.dll
+D:\Work\js\koExtend\koExtend\koExtend\bin\EntityFramework.xml
+D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\ResolveAssemblyReference.cache
+D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\koExtend.dll
+D:\Work\js\koExtend\koExtend\koExtend\obj\Debug\koExtend.pdb
