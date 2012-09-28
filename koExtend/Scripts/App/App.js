@@ -1,4 +1,9 @@
-﻿function App(options) {
+﻿function MenuItem(name, url) {
+    this.name = name;
+    this.url = url;
+}
+
+function App(options) {
     var app = this;
     $.extend(app, options);
 
@@ -9,36 +14,52 @@
     app.ethnicityPage = ko.observable().extend({ page: { viewModel: EthnicityViewModel, context: app} });
 
 
-    app.menu = ["Letter Templates", "Ethnicity Labels"];
-    app.selectedMenuItem = ko.observable("Letter Templates");
+    app.menu = [
+        new MenuItem("Letter Templates", "LetterTemplate"),
+        new MenuItem("Ethnicity Labels", "EthnicityLabels")
+    ];
 
-    app.goToPage = function (pageName) {
-        if (pageName == "Letter Templates")
-            app.goToList();
-        if (pageName == "Ethnicity Labels")
-            app.goToEthnicity();
-        app.selectedMenuItem(pageName);
+    app.selectedMenuItem = ko.observable("LetterTemplate");
+
+    app.goToPage = function (item) {
+        app.selectedMenuItem(item.url);
+        location.hash = item.url;
     };
 
     app.goToList = function () {
-        $.get(options.listTemplatesPageLink, app.listTemplatesPage);
-        app.editTemplatePage(null);
-        app.ethnicityPage(null);
+        location.hash = 'LetterTemplate';
     };
 
 
     app.goToEdit = function (id) {
-        $.get(options.editTemplatePageLink, { id: id }, app.editTemplatePage);
-        app.listTemplatesPage(null);
-        app.ethnicityPage(null);
+        location.hash = 'LetterTemplate/' + id;
     };
 
     app.goToEthnicity = function () {
-        $.get(options.ethnicityLink, app.ethnicityPage);
-        app.listTemplatesPage(null);
-        app.editTemplatePage(null);
+        location.hash = 'EthnicityLabels';
     };
+    
+    Sammy(function () {
+        this.get('#LetterTemplate', function () {
+            $.get(options.listTemplatesPageLink, app.listTemplatesPage);
+            app.editTemplatePage(null);
+            app.ethnicityPage(null);
+        });
 
+        this.get('#LetterTemplate/:templateId', function () {
+            $.get(options.editTemplatePageLink, { id: this.params.templateId }, app.editTemplatePage);
+            app.listTemplatesPage(null);
+            app.ethnicityPage(null);
+        });
+        this.get('#EthnicityLabels', function () {
+            $.get(options.ethnicityLink, app.ethnicityPage);
+            app.listTemplatesPage(null);
+            app.editTemplatePage(null);
+        });
+        this.get('', function () {
+            self.goToList();
+        });
+    }).run();
 
     app.goToList();
 }

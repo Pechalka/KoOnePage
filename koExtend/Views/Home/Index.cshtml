@@ -9,6 +9,9 @@
     <head>
         <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/knockout-2.1.0.debug.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/sammy/sammy.min.js")" type="text/javascript"></script>
+        
+        
 
         <script src="@Url.Content("~/Scripts/App/ko.Pages.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/App/App.js")" type="text/javascript"></script>
@@ -40,8 +43,8 @@
     </head>
     <body>
         <ul data-bind="foreach : menu">
-            <li data-bind="css : { selected : $root.selectedMenuItem() == $data }">
-                <a href="#" data-bind="text : $data, click : $root.goToPage"></a>
+            <li data-bind="css : { selected : $root.selectedMenuItem() == url }">
+                <a href="#" data-bind="text : name, click : $root.goToPage"></a>
             </li>
         </ul>
         
