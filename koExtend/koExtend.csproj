@@ -65,6 +65,7 @@
     <Compile Include="Controllers\EthnicityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LetterTemplateController.cs" />
+    <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,6 +143,7 @@
     <Content Include="Scripts\App\ViewModels\EditViewModel.js" />
     <Content Include="Scripts\App\ViewModels\EthnicityViewModel.js" />
     <Content Include="Scripts\App\ViewModels\ListViewModel.js" />
+    <Content Include="Scripts\App\ViewModels\SubjectsViewModel.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -257,6 +259,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_LetterTemplateEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\_Subjects.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

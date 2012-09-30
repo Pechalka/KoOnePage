@@ -15,10 +15,12 @@ function App(options) {
     
     app.ethnicityPage = ko.observable().extend({ page: { viewModel: EthnicityViewModel, context: app} });
 
+    app.subjectsPage = ko.observable().extend({ page: { viewModel: SubjectsViewModel, context: app} });
 
     app.menu = [
         new MenuItem("Letter Templates", "LetterTemplate"),
-        new MenuItem("Ethnicity Labels", "EthnicityLabels")
+        new MenuItem("Ethnicity Labels", "EthnicityLabels"),
+        new MenuItem("Subjects", "Subjects")
     ];
 
     app.selectedMenuItem = ko.observable("LetterTemplate");
@@ -62,6 +64,7 @@ function App(options) {
         app.listTemplatesPage(null);
         app.editTemplatePage(null);
         app.ethnicityPage(null);
+        app.subjectsPage(null);
     };
 
     Sammy(function () {
@@ -81,9 +84,13 @@ function App(options) {
             $.get(options.ethnicityLink, app.ethnicityPage);
             app.selectedMenuItem("EthnicityLabels");
         });
+        this.get('#Subjects', function () {
+            app.clearPages();
+            $.get(options.subjectsLink, app.subjectsPage);
+            app.selectedMenuItem("Subjects");
+        });
         this.get('', function () {
             app.goToList();
         });
     }).run();
 }
-

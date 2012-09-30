@@ -25,6 +25,7 @@
         <script src="@Url.Content("~/Scripts/App/ViewModels/EditViewModel.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/App/ViewModels/EthnicityViewModel.js")" type="text/javascript"></script>
         <script src="@Url.Content("~/Scripts/App/ViewModels/ListViewModel.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/App/ViewModels/SubjectsViewModel.js")" type="text/javascript"></script>
 
         <style type="text/css">
             .selected {
@@ -43,7 +44,11 @@
                     updateShcoolOptions: '@Url.Action("UpdateSchoolOptions", "LetterTemplate")',
 
                     ethnicityLink: '@Url.Action("Getethnicities", "Ethnicity")',
-                    ethnicityUpdateLink: '@Url.Action("UpdateEthnicitys", "Ethnicity")'
+                    ethnicityUpdateLink: '@Url.Action("UpdateEthnicitys", "Ethnicity")',
+                    
+                    subjectsLink : '@Url.Action("GetSubjects", "Subjects")',
+                    deleteSubjectLink : '@Url.Action("Delete", "Subjects")',
+                    addSubjectLink: '@Url.Action("Add", "Subjects")'                   
                 }));
             });
         </script>
@@ -68,7 +73,11 @@
 
         <div data-bind="with : editTemplatePage">
             @Html.Partial("_LetterTemplateEdit")
-        </div>           
+        </div>   
+
+        <div data-bind="with : subjectsPage">
+            @Html.Partial("_Subjects")
+        </div>                 
         </div> 
     </body>
 </html>
