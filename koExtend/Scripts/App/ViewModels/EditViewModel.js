@@ -6,8 +6,10 @@
 
     self.save = function (page) {
         $.post(app.updateTemplateLink, { content: page.Content, templateId: page.Id },
-                        function () {
-                            app.goToList();
+                        function (responseData) {
+                            app.resultProccesor.Procces(responseData);
+                            if (responseData.isSuccess)
+                                app.goToList();
                         });
     };
 }

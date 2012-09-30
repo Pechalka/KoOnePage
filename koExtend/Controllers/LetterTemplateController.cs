@@ -30,17 +30,35 @@ namespace koExtend.Controllers
             SchoolSerivce.WhenCreated = whenCreated;
             SchoolSerivce.WhenComplited = whenComplited;
 
-            return new EmptyResult();
+            return Success("Updated successfully");
         }
 
 
         public ActionResult UpdateTemplate(string templateId, string content, List<string> tokens)
         {
+            if (content.Contains("error"))
+                return Fail("can save fail template");
+
             SchoolSerivce.UpdateTemplate(templateId, content, "vasa");
-            
-            return new EmptyResult();
+
+            return Success("Successfully saved");
         }
+
+        public JsonResult Fail(string message)
+        {
+            return Json(new
+                            {
+                                isSuccess = false, message
+                            });
+        }
+
+        public JsonResult Success(string message)
+        {
+            return Json(new
+            {
+                isSuccess = true, message
+            });
+        }
+
     }
 }
-
-

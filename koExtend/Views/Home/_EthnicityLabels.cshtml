@@ -1,4 +1,4 @@
-﻿<table>
+﻿<table class="table">
     <thead>
         <tr>
             <th>Ethnicity</th>
@@ -12,5 +12,7 @@
         </tr>
     </tbody>
 </table>
-<input type="text" data-bind="value : nameToAdd"/>
-<a href="#" data-bind="click: add">Add</a>
+<div class="input-append">
+              <input class="span2" data-bind="value : nameToAdd" size="16" type="text">
+              <button class="btn" data-bind="click: add" type="button">Add</button>
+            </div>

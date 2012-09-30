@@ -3,8 +3,22 @@
     self.nameToAdd = ko.observable("");
     self.ethnicities = ko.observableArray(data.ethnicities || []);
 
-    self.add = function() {
+    self.add = function () {
+        var name = self.nameToAdd();
+
+        if (name == '') return;
+
+        var duplicateItem = ko.utils.arrayFirst(self.ethnicities(), function (item) {
+            return item.Name.toLowerCase() == name.toLowerCase();
+        });
+
+        if (duplicateItem != null) {
+            app.resultProccesor.Fail('Ethnicity with such name already exists');
+            return;
+        }
+
         self.ethnicities.push({ Name: self.nameToAdd(), Id: self.nameToAdd() });
+        app.resultProccesor.Succes('Ethnicity was added successfully');
         self.nameToAdd("");
     };
 

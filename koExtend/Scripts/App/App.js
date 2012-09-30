@@ -3,6 +3,8 @@
     this.url = url;
 }
 
+
+
 function App(options) {
     var app = this;
     $.extend(app, options);
@@ -26,11 +28,28 @@ function App(options) {
         location.hash = item.url;
     };
 
+    app.resultProccesor = {
+        cleanMessages: function () {
+            $('#alert_placeholder').empty();
+        },
+        Procces: function (data) {
+            if (data.isSuccess) {
+                app.resultProccesor.Succes(data.message);
+            } else
+                app.resultProccesor.Fail(data.message);
+        },
+        Succes: function (message) {
+            $('#alert_placeholder').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+        },
+        Fail: function (message) {
+            $('#alert_placeholder').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+        }
+    };
+    
     app.goToList = function () {
         location.hash = 'LetterTemplate';
     };
-
-
+    
     app.goToEdit = function (id) {
         location.hash = 'LetterTemplate/' + id;
     };
@@ -38,28 +57,33 @@ function App(options) {
     app.goToEthnicity = function () {
         location.hash = 'EthnicityLabels';
     };
-    
+
+    app.clearPages = function () {
+        app.listTemplatesPage(null);
+        app.editTemplatePage(null);
+        app.ethnicityPage(null);
+    };
+
     Sammy(function () {
         this.get('#LetterTemplate', function () {
+            app.clearPages();
             $.get(options.listTemplatesPageLink, app.listTemplatesPage);
-            app.editTemplatePage(null);
-            app.ethnicityPage(null);
+            app.selectedMenuItem("LetterTemplate");
         });
 
-        this.get('#LetterTemplate/:templateId', function () {
-            $.get(options.editTemplatePageLink, { id: this.params.templateId }, app.editTemplatePage);
-            app.listTemplatesPage(null);
-            app.ethnicityPage(null);
+        this.get('#LetterTemplate/:id', function () {
+            app.clearPages();
+            $.get(options.editTemplatePageLink, { id: this.params.id }, app.editTemplatePage);
+            app.selectedMenuItem("LetterTemplate");
         });
         this.get('#EthnicityLabels', function () {
+            app.clearPages();
             $.get(options.ethnicityLink, app.ethnicityPage);
-            app.listTemplatesPage(null);
-            app.editTemplatePage(null);
+            app.selectedMenuItem("EthnicityLabels");
         });
         this.get('', function () {
-            self.goToList();
+            app.goToList();
         });
     }).run();
-
-    app.goToList();
 }
+

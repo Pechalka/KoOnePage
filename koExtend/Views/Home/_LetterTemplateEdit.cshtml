@@ -1,9 +1,17 @@
 ﻿<h1 data-bind="text : Name"></h1>
-<textarea rows="10" cols="50" data-bind="value : Content"></textarea>
-
-<ul data-bind="foreach : Tokens">
-    <li data-bind="text : $data"></li>
-</ul>
-
-<a href="#" data-bind="click : cansel">Cansel</a>
-<a href="#" data-bind="click : save">Save</a>
+<div class="row">
+    <div class="span3">
+        <textarea rows="3" style="height: 500px" data-bind="value : Content"></textarea>
+    </div>
+    <div class="pull-left">
+        <ul data-bind="foreach : Tokens" class="unstyled">
+            <li>[<span href="#" data-bind="text : $data"></span>]</li>
+        </ul>
+    </div>
+    </div>
+<div class="row">
+    <div class="span12">
+    <a href="#" data-bind="click : cansel" class="btn">Cansel</a>
+    <a href="#" data-bind="click : save"  class="btn">Save</a>        
+    </div>          
+</div>
