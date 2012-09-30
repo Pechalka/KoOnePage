@@ -3,6 +3,12 @@
     self.nameToAdd = ko.observable("");
     self.ethnicities = ko.observableArray(data.ethnicities || []);
 
+    self.ethnicitiesSort = ko.computed(function () {
+        return self.ethnicities.sort(function (left, right) {
+            return left.Name < right.Name ? -1 : 1;
+        });
+    }, self);
+
     self.add = function () {
         var name = self.nameToAdd();
 
