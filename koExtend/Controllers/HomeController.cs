@@ -9,5 +9,9 @@ namespace koExtend.Controllers
             return View();
         }
 
+        public ActionResult GetTemplate(string templateName)
+        {
+            return PartialView(templateName);
+        }
     }
 }

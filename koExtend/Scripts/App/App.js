@@ -3,7 +3,23 @@
     this.url = url;
 }
 
-
+var ResultProccesor = function () {
+    this.cleanMessages = function () {
+        $('#alert_placeholder').empty();
+    };
+    this.Procces = function (data) {
+        if (data.isSuccess) {
+            this.Succes(data.message);
+        } else
+            this.Fail(data.message);
+    };
+    this.Succes = function (message) {
+        $('#alert_placeholder').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+    };
+    this.Fail = function(message) {
+        $('#alert_placeholder').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+    };
+};
 
 function App(options) {
     var app = this;
@@ -15,7 +31,18 @@ function App(options) {
     
     app.ethnicityPage = ko.observable().extend({ page: { viewModel: EthnicityViewModel, context: app} });
 
+
     app.subjectsPage = ko.observable().extend({ page: { viewModel: SubjectsViewModel, context: app} });
+//        new View({
+//        initLink            : options.subjectsLink,
+//        templateName        : 'Subjects',
+//        viewModel           : SubjectsViewModel,
+//        context             : app
+//    });
+        
+        //new View(options.subjectsLink, 'Subjects', SubjectsViewModel, [app]);
+    
+        //ko.observable().extend({ page: { viewModel: SubjectsViewModel, context: app} });
 
     app.menu = [
         new MenuItem("Letter Templates", "LetterTemplate"),
@@ -30,23 +57,7 @@ function App(options) {
         location.hash = item.url;
     };
 
-    app.resultProccesor = {
-        cleanMessages: function () {
-            $('#alert_placeholder').empty();
-        },
-        Procces: function (data) {
-            if (data.isSuccess) {
-                app.resultProccesor.Succes(data.message);
-            } else
-                app.resultProccesor.Fail(data.message);
-        },
-        Succes: function (message) {
-            $('#alert_placeholder').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
-        },
-        Fail: function (message) {
-            $('#alert_placeholder').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
-        }
-    };
+    app.resultProccesor = new ResultProccesor;
     
     app.goToList = function () {
         location.hash = 'LetterTemplate';
@@ -78,6 +89,10 @@ function App(options) {
             app.clearPages();
             $.get(options.editTemplatePageLink, { id: this.params.id }, app.editTemplatePage);
             app.selectedMenuItem("LetterTemplate");
+
+          //  app.editTemplatePage.activate({ id: this.params.id });
+            //app.selectedMenuItem("LetterTemplate");
+            
         });
         this.get('#EthnicityLabels', function () {
             app.clearPages();
@@ -87,10 +102,26 @@ function App(options) {
         this.get('#Subjects', function () {
             app.clearPages();
             $.get(options.subjectsLink, app.subjectsPage);
-            app.selectedMenuItem("Subjects");
+
+          //  app.subjectsPage.activate();
+          //  app.selectedMenuItem("Subjects");
         });
         this.get('', function () {
             app.goToList();
         });
     }).run();
+
+    app.selectedView = ko.observable();
 }
+
+
+var View = function (initUrl, templateName, viewModel, app) {
+    this.activate = function (requestData) {
+        $.get(initUrl, requestData, function (responseData) {
+            app.selectedView({
+                     data : new viewModel(responseData, app),
+                     template: templateName
+                     });
+        });
+    };
+};

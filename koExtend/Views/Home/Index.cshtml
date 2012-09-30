@@ -3,6 +3,11 @@
     
 }
 
+@helper GetTemplate(string templateName)
+{
+    @Html.Action("GetTemplate", new { templateName })
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -52,6 +57,12 @@
                 }));
             });
         </script>
+        
+        @GetTemplate("_EthnicityLabels")
+        @GetTemplate("_LetterTemplates")
+        @GetTemplate("_LetterTemplateEdit")
+        @GetTemplate("_Subjects")
+
         <title>Index</title>
     </head>
     <body>
@@ -63,9 +74,9 @@
             </ul> 
             <div id="alert_placeholder"></div>
 
-            <div data-bind="with : ethnicityPage">
-            @Html.Partial("_EthnicityLabels")
-        </div>
+            <div data-bind="with : ethnicityPage">               
+                @Html.Partial("_EthnicityLabels")
+            </div>
 
         <div data-bind="with : listTemplatesPage">
             @Html.Partial("_LetterTemplates")
