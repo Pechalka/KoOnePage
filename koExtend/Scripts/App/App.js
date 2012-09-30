@@ -4,19 +4,20 @@
 }
 
 var ResultProccesor = function () {
+    var self = this;
     this.cleanMessages = function () {
         $('#alert_placeholder').empty();
     };
     this.Procces = function (data) {
         if (data.isSuccess) {
-            this.Succes(data.message);
+            self.Succes(data.message);
         } else
-            this.Fail(data.message);
+            self.Fail(data.message);
     };
     this.Succes = function (message) {
         $('#alert_placeholder').html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
     };
-    this.Fail = function(message) {
+    this.Fail = function (message) {
         $('#alert_placeholder').html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
     };
 };
@@ -25,24 +26,38 @@ function App(options) {
     var app = this;
     $.extend(app, options);
 
+    app.selectedView = ko.observable(null);
 
-    app.listTemplatesPage = ko.observable().extend({ page: { viewModel: ListViewModel, context: app} });
-    app.editTemplatePage = ko.observable().extend({ page: { viewModel: EditViewModel, context: app} });
+    app.listTemplatesPage = new View({
+        initLink        : options.listTemplatesPageLink,
+        templateName    : 'letterTemplatesTemp',
+        viewModel       : ListViewModel,
+        context         : app
+    }); 
     
-    app.ethnicityPage = ko.observable().extend({ page: { viewModel: EthnicityViewModel, context: app} });
+    app.editTemplatePage = new View({
+        initLink        : options.editTemplatePageLink,
+        templateName    : 'letterTemplateEditTemp',
+        viewModel       : EditViewModel,
+        context         : app
+    }); 
+
+    app.ethnicityPage = new View({
+        initLink        : options.ethnicityLink,
+        templateName    :   'ethnicityLabelsTemp',
+        viewModel       :   EthnicityViewModel,
+        context         :   app        
+    }); 
 
 
-    app.subjectsPage = ko.observable().extend({ page: { viewModel: SubjectsViewModel, context: app} });
-//        new View({
-//        initLink            : options.subjectsLink,
-//        templateName        : 'Subjects',
-//        viewModel           : SubjectsViewModel,
-//        context             : app
-//    });
+    app.subjectsPage = new View({
+        initLink        :   options.subjectsLink,
+        templateName    :   'subjectsTemp',
+        viewModel       :   SubjectsViewModel,
+        context         :   app
+    });
         
-        //new View(options.subjectsLink, 'Subjects', SubjectsViewModel, [app]);
-    
-        //ko.observable().extend({ page: { viewModel: SubjectsViewModel, context: app} });
+
 
     app.menu = [
         new MenuItem("Letter Templates", "LetterTemplate"),
@@ -71,57 +86,42 @@ function App(options) {
         location.hash = 'EthnicityLabels';
     };
 
-    app.clearPages = function () {
-        app.listTemplatesPage(null);
-        app.editTemplatePage(null);
-        app.ethnicityPage(null);
-        app.subjectsPage(null);
-    };
 
     Sammy(function () {
         this.get('#LetterTemplate', function () {
-            app.clearPages();
-            $.get(options.listTemplatesPageLink, app.listTemplatesPage);
+            app.listTemplatesPage.activate();
             app.selectedMenuItem("LetterTemplate");
         });
 
         this.get('#LetterTemplate/:id', function () {
-            app.clearPages();
-            $.get(options.editTemplatePageLink, { id: this.params.id }, app.editTemplatePage);
+            app.editTemplatePage.activate({ id: this.params.id });
             app.selectedMenuItem("LetterTemplate");
-
-          //  app.editTemplatePage.activate({ id: this.params.id });
-            //app.selectedMenuItem("LetterTemplate");
-            
         });
         this.get('#EthnicityLabels', function () {
-            app.clearPages();
-            $.get(options.ethnicityLink, app.ethnicityPage);
+            app.ethnicityPage.activate();
             app.selectedMenuItem("EthnicityLabels");
         });
         this.get('#Subjects', function () {
-            app.clearPages();
-            $.get(options.subjectsLink, app.subjectsPage);
-
-          //  app.subjectsPage.activate();
-          //  app.selectedMenuItem("Subjects");
+            app.subjectsPage.activate();
+            app.selectedMenuItem("Subjects");
         });
         this.get('', function () {
-            app.goToList();
+                app.goToList();
         });
     }).run();
-
-    app.selectedView = ko.observable();
+    
 }
 
 
-var View = function (initUrl, templateName, viewModel, app) {
+var View = function (options) {
+    var app = options.context;
     this.activate = function (requestData) {
-        $.get(initUrl, requestData, function (responseData) {
+        $.get(options.initLink, requestData, function (responseData) {
+            var _data = $.extend(responseData, new options.viewModel(responseData, app));
             app.selectedView({
-                     data : new viewModel(responseData, app),
-                     template: templateName
-                     });
+                data: _data,
+                templateName: options.templateName
+            });
         });
     };
 };

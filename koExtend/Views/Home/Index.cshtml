@@ -1,11 +1,10 @@
 ﻿@{
     Layout = null;
-    
 }
 
 @helper GetTemplate(string templateName)
 {
-    @Html.Action("GetTemplate", new { templateName })
+    Html.RenderAction("GetTemplate", "Templates", new { templateName });       
 }
 
 <!DOCTYPE html>
@@ -58,10 +57,10 @@
             });
         </script>
         
-        @GetTemplate("_EthnicityLabels")
-        @GetTemplate("_LetterTemplates")
-        @GetTemplate("_LetterTemplateEdit")
-        @GetTemplate("_Subjects")
+        @GetTemplate("ethnicityLabelsTemp")
+        @GetTemplate("letterTemplatesTemp")
+        @GetTemplate("letterTemplateEditTemp")
+        @GetTemplate("subjectsTemp")
 
         <title>Index</title>
     </head>
@@ -73,22 +72,9 @@
                 </li>
             </ul> 
             <div id="alert_placeholder"></div>
-
-            <div data-bind="with : ethnicityPage">               
-                @Html.Partial("_EthnicityLabels")
-            </div>
-
-        <div data-bind="with : listTemplatesPage">
-            @Html.Partial("_LetterTemplates")
-        </div>
-
-        <div data-bind="with : editTemplatePage">
-            @Html.Partial("_LetterTemplateEdit")
-        </div>   
-
-        <div data-bind="with : subjectsPage">
-            @Html.Partial("_Subjects")
-        </div>                 
+            <div data-bind="with : selectedView">
+                <div data-bind="template: { name: templateName, data: data }"></div>          
+            </div>                
         </div> 
     </body>
 </html>

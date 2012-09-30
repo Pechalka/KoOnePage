@@ -66,6 +66,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LetterTemplateController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,8 +243,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -252,19 +251,22 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_EthnicityLabels.cshtml" />
+    <Content Include="Views\Templates\ethnicityLabelsTemp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_LetterTemplates.cshtml" />
+    <Content Include="Views\Templates\letterTemplatesTemp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_LetterTemplateEdit.cshtml" />
+    <Content Include="Views\Templates\letterTemplateEditTemp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_Subjects.cshtml" />
+    <Content Include="Views\Templates\subjectsTemp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\GetTemplate.cshtml" />
+    <Content Include="Views\Shared\GetTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
